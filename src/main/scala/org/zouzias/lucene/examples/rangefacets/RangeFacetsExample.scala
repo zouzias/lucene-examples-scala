@@ -28,6 +28,9 @@ import org.apache.lucene.index.IndexWriterConfig.OpenMode
 import org.apache.lucene.search.{IndexSearcher, MatchAllDocsQuery}
 import org.apache.lucene.store.RAMDirectory
 
+/**
+ * Range faceted search example
+ */
 class RangeFacetsExample extends Closeable {
 
   private val indexDir = new RAMDirectory()
@@ -38,6 +41,8 @@ class RangeFacetsExample extends Closeable {
 
   private val nowSec = System.currentTimeMillis()
 
+  private val DateField = "timestamp"
+
   // Add documents with a fake timestamp, 1000 sec before
   // "now", 2000 sec before "now", ...:
   (1 to 1000).foreach{ case i =>
@@ -45,10 +50,10 @@ class RangeFacetsExample extends Closeable {
     val meta = nowSec - i * 100
 
     // Add as doc values field, so we can compute range facets:
-    doc.add(new NumericDocValuesField("timestamp", meta))
+    doc.add(new NumericDocValuesField(DateField, meta))
 
     // Add as numeric field so we can drill-down:
-    doc.add(new LongField("timestamp", meta, Field.Store.NO))
+    doc.add(new LongField(DateField, meta, Field.Store.NO))
     indexWriter.addDocument(doc)
   }
 
@@ -73,8 +78,8 @@ class RangeFacetsExample extends Closeable {
     // you'd use a "normal" query:
     FacetsCollector.search(searcher, new MatchAllDocsQuery(), 10, fc)
 
-    val facets = new LongRangeFacetCounts("timestamp", fc, PAST_HOUR, PAST_SIX_HOURS, PAST_DAY)
-    facets.getTopChildren(10, "timestamp")
+    val facets = new LongRangeFacetCounts(DateField, fc, PAST_HOUR, PAST_SIX_HOURS, PAST_DAY)
+    facets.getTopChildren(10, DateField)
 }
 
   @Override
