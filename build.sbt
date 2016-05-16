@@ -30,11 +30,13 @@ val scalatest                 = "org.scalatest"                  %% "scalatest" 
 val lucene_facet              = "org.apache.lucene"              % "lucene-facet"              % luceneV
 val lucene_analyzers          = "org.apache.lucene"              % "lucene-analyzers-common"   % luceneV
 val lucene_expressions        = "org.apache.lucene"              % "lucene-expressions"        % luceneV
+val lucene_spatial            = "org.apache.lucene"              % "lucene-spatial"            % luceneV
 
 libraryDependencies ++= Seq(
   lucene_facet,
   lucene_analyzers,
   lucene_expressions,
+  lucene_spatial,
   specs2_core,
   scalatest
 )
