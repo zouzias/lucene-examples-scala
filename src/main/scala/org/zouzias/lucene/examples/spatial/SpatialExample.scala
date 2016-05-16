@@ -28,6 +28,9 @@ import org.apache.lucene.spatial.prefix.tree.GeohashPrefixTree
 import org.apache.lucene.spatial.query.{SpatialArgs, SpatialArgsParser, SpatialOperation}
 import org.apache.lucene.store.{Directory, RAMDirectory}
 
+/**
+ * Scala rewrite of https://github.com/apache/lucene-solr/blob/branch_5_5/lucene/spatial/src/test/org/apache/lucene/spatial/SpatialExample.java
+ */
 class SpatialExample {
 
   /**
